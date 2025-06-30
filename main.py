@@ -19,7 +19,7 @@ def main():
         player.draw(screen)
         pygame.display.flip()
         tick = clock.tick(60)
-        
+        player.update(dt)
         dt = tick / 1000.0
 
 
