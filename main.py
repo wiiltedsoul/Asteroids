@@ -6,6 +6,8 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from circleshape import *
+import sys
 
 def main():
     pygame.init()
@@ -28,6 +30,10 @@ def main():
         tick = clock.tick(60)
         dt = tick / 1000.0
         updateable.update(dt)
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("Game Over!")
+                sys.exit()
         for sprite in drawable:
             sprite.draw(screen)
         pygame.display.flip()
