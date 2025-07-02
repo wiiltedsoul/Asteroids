@@ -6,6 +6,7 @@ from shot import Shot
 class Player(circleshape.CircleShape):
     def __init__(self, x, y,radius):
         super().__init__(x, y, radius)
+        self.cooldown = 0
         self.rotation = 0
 
     # in the player class
@@ -23,6 +24,7 @@ class Player(circleshape.CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
     
     def update(self, dt):
+        self.cooldown -= dt
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -41,5 +43,9 @@ class Player(circleshape.CircleShape):
         self.position += forward * PLAYER_SPEED * dt
     
     def shoot(self):
+        if self.cooldown > 0:
+            return
+        else:
+            self.cooldown = PLAYER_SHOOT_COOLDOWN
         bullet = Shot(self.position.x, self.position.y, SHOT_RADIUS)
         bullet.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
